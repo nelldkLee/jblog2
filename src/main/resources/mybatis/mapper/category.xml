@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="category">
+	<insert id="insert" parameterType="categoryvo">
+		<![CDATA[
+		insert into category values(null, #{blogId}, #{title},#{description}, now())
+		]]>
+	</insert>
+	<select id="getList" resultType="categoryvo" parameterType="categoryvo">
+		SELECT no, blog_id blogId, c.title title, description, reg_date regDate, ifnull(postCount,0) postCount
+		FROM category c left outer join (select category_no, count(*) postCount
+									from post
+									group by category_no) b
+		ON blog_id = #{blogId}  
+			AND c.no = b.category_no;
+	</select>
+	<delete id="delete">
+		DELETE FROM category WHERE no = #{no}
+	</delete>
+</mapper>

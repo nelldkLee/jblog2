@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="blog">
+	<insert id="insert" parameterType="blogvo">
+		<![CDATA[
+		insert into blog(blog_id, title) values(#{blogId}, #{blogTitle})
+		]]>
+	</insert>
+	<update id="update">
+		UPDATE blog SET title = #{title}, logo=#{logo} 
+		WHERE blog_id = #{blogId}
+	</update>
+	<update id="updateOrderNo">
+		UPDATE board SET order_no = (order_no + 1) 
+		WHERE group_no = #{groupNo} AND order_no > #{orderNo}
+	</update>
+	<select id="get" resultType="blogvo">
+		SELECT blog_id blogId, title, logo FROM blog WHERE blog_id=#{blogId}
+	</select>
+</mapper>
