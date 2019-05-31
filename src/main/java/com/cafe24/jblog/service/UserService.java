@@ -30,4 +30,8 @@ public class UserService {
 		return userDao.get(vo);
 	}
 
+	public Boolean existId(String id) {
+		return userDao.getUserExist(id);
+	}
+
 }

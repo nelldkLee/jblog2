@@ -82,7 +82,7 @@
 					
 				},
 				error: function(xhr, error){
-					console.error("error:" + error)
+					console.error("error:" + error);
 				}
 			});
 		});
@@ -91,8 +91,9 @@
 			$.post("${pageContext.servletContext.contextPath}/${blogId}/admin/category/remove",
 			        {categoryNo: categoryNo},
 			        function(data){
+			        	console.log(data);
 			        	location.reload();
-			        });
+			       	});
 		});
 	});
 	</script>

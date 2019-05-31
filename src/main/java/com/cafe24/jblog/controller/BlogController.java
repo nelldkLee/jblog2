@@ -39,12 +39,15 @@ public class BlogController {
 	public String blogMain(@PathVariable Optional<String> blog_id, @PathVariable Optional<Integer> category_no, ModelMap modelMap) {
 		System.out.println("pathvariable check");
 		System.out.println("blog_id : "  +blog_id.get());
-		Integer categoryNo = 1;
+		String blogId = blog_id.get();
+		Integer categoryNo = 0;
 		if(category_no.isPresent()) {
 			categoryNo = category_no.get();
 			System.out.println("category_no : "  +category_no.get());
+		}else {
+			categoryNo = categoryService.getCategoryNo(blogId);
+			return "redirect:/" + blogId + "/" + categoryNo; 
 		}
-		String blogId = blog_id.get();
 		modelMap.addAllAttributes(blogService.getMainList(blogId, categoryNo));
 		
 		return "blog/blog-main";
@@ -52,16 +55,18 @@ public class BlogController {
 	
 	@GetMapping("/admin/basic")
 	public String blogBasicAdmin(@PathVariable String blog_id, Model model) {
-		BlogVo blogVo = blogService.getBlog(blog_id);
+		model.addAttribute("blogVo", blogService.getBlog(blog_id));
 		model.addAttribute("blogId",blog_id);
 		model.addAttribute("selected","basic");
-		model.addAttribute("blogVo", blogVo);
 		return "blog/blog-admin-basic";
 	}
 	@PostMapping("/admin/basic")
 	public String blogBasicAdmin(BlogVo vo,@RequestParam(value="logo-file") MultipartFile multipartFile, @PathVariable String blog_id) {
 		String logoUrl = fileuploadService.restore(multipartFile);
-		vo.setLogo(logoUrl);
+		if(logoUrl != null && !logoUrl.isEmpty()) {
+			System.out.println("check logoUrl" + logoUrl);
+			vo.setLogo(logoUrl);	
+		}
 		vo.setBlogId(blog_id);
 		blogService.modify(vo);
 		
@@ -71,7 +76,7 @@ public class BlogController {
 	@GetMapping("/admin/category")
 	public String blogCategoryAdmin(@PathVariable String blog_id, Model model) {
 		List<CategoryVo> categoryList = categoryService.getList(blog_id);
-		
+		model.addAttribute("blogVo", blogService.getBlog(blog_id));
 		model.addAttribute("categoryList", categoryList);
 		model.addAttribute("blogId",blog_id);
 		model.addAttribute("selected","category");
@@ -92,13 +97,15 @@ public class BlogController {
 	
 	@GetMapping("/admin/write")
 	public String blogWriteAdmin(@PathVariable String blog_id, Model model) {
+		model.addAttribute("blogVo", blogService.getBlog(blog_id));
+		model.addAttribute("categoryList",categoryService.getList(blog_id));
 		model.addAttribute("blogId",blog_id);
 		model.addAttribute("selected","write");
 		return "blog/blog-admin-write";
 	}
 	@PostMapping("/admin/write")
-	public String blogWriteAdmin(PostVo vo, @PathVariable String blog_id) {
-		
+	public String blogWriteAdmin(PostVo postVo, @PathVariable String blog_id) {
+		blogService.registerPost(postVo);
 		return "redirect:/" + blog_id;
 	}
 }

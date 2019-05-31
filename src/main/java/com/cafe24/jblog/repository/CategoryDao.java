@@ -26,4 +26,8 @@ public class CategoryDao {
 	public int delete(Integer categoryNo) {
 		return sqlSession.delete("category.delete",categoryNo);
 	}
+
+	public Integer getCategoryNoById(String blogId) {
+		return sqlSession.selectOne("category.getCategoryNoById", blogId);
+	}
 }

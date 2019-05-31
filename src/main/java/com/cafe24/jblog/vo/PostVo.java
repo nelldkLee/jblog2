@@ -38,6 +38,7 @@ public class PostVo {
 	public void setRegDate(String regDate) {
 		this.regDate = regDate;
 	}
+	
 	@Override
 	public String toString() {
 		return "PostVo [no=" + no + ", categoryNo=" + categoryNo + ", title=" + title + ", content=" + content

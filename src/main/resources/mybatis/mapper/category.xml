@@ -18,4 +18,12 @@
 	<delete id="delete">
 		DELETE FROM category WHERE no = #{no}
 	</delete>
+	<select id="getCategoryNoById" parameterType="string" resultType="int">
+		SELECT no  
+			FROM category 
+		WHERE blog_id = #{blogId}
+		ORDER BY no ASC 
+		LIMIT 0,1
+	</select>
+	
 </mapper>

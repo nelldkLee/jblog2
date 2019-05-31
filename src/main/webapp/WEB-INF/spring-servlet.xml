@@ -64,6 +64,10 @@
 			<bean class="com.cafe24.security.AuthLoginInterceptor" />
 		</mvc:interceptor>
 		<mvc:interceptor>
+			<mvc:mapping path="/user/logout" />
+			<bean class="com.cafe24.security.AuthLogoutInterceptor" />
+		</mvc:interceptor>
+		<mvc:interceptor>
 			<mvc:mapping path="/**" />
 			<bean class="com.cafe24.security.AuthorizeAdminInterceptor" />
 		</mvc:interceptor>

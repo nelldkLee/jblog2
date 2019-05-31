@@ -8,7 +8,10 @@
 		]]>
 	</insert>
 	<update id="update">
-		UPDATE blog SET title = #{title}, logo=#{logo} 
+		UPDATE blog SET title = #{title}
+		<if test="logo != null">
+		, logo=#{logo}
+		</if>
 		WHERE blog_id = #{blogId}
 	</update>
 	<update id="updateOrderNo">

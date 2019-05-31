@@ -1,6 +1,7 @@
 package com.cafe24.jblog.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,10 @@ public class CategoryService {
 	public boolean delete(Integer categoryNo) {
 		int count = categoryDao.delete(categoryNo);
 		return count == 1;
+	}
+	public Integer getCategoryNo(String blogId) {
+		Integer categoryNo = categoryDao.getCategoryNoById(blogId);
+		return categoryNo ==null ? 0 : categoryNo ;
 	}
 
 }

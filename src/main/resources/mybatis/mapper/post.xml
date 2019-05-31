@@ -7,5 +7,10 @@
 		insert into post values(null, #{categoryNo}, #{title}, #{content}, now())
 		]]>
 	</insert>
-	
+	<select id="getList" resultType="postvo" parameterType="int">
+		SELECT no, category_no categoryNo, title, content, reg_date regDate 
+			FROM post 
+		WHERE category_no = #{categoryNo}
+			ORDER BY no DESC;
+	</select>
 </mapper>

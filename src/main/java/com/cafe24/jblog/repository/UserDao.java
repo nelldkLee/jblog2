@@ -20,5 +20,9 @@ public class UserDao {
 	public UserVo get(UserVo vo) {
 		return sqlSession.selectOne("user.getUserByPassword", vo);
 	}
+	public boolean getUserExist(String id) {
+		UserVo vo = sqlSession.selectOne("user.getUserExist",id);
+		return vo != null? true : false;
+	}
 	
 }

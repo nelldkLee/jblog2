@@ -20,4 +20,7 @@
 	<delete id="delete" parameterType="uservo">
 		delete from guestbook where no=#{no} and password=#{password}
 	</delete>
+	<select id="getUserExist" resultType="uservo" parameterType="string">
+		SELECT id, name, reg_date regDate FROM users WHERE id = #{id}
+	</select>
 </mapper>
