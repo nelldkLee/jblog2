@@ -49,7 +49,7 @@ public class BlogController {
 			return "redirect:/" + blogId + "/" + categoryNo; 
 		}
 		modelMap.addAllAttributes(blogService.getMainList(blogId, categoryNo));
-		
+		modelMap.addAttribute("categoryNo", categoryNo);
 		return "blog/blog-main";
 	}
 	
